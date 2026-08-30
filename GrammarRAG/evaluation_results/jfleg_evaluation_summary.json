@@ -1,0 +1,24 @@
+{
+  "run_config": {
+    "jfleg_dataset": "jhu-clsp/jfleg",
+    "jfleg_split": "test",
+    "num_examples_requested": null,
+    "retrieval_knowledge_base": "agentlans/grammar-correction",
+    "chroma_collection": "grammar_correction_chunks",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "openrouter_model": "openai/gpt-4o-mini",
+    "top_k": 5
+  },
+  "summary": {
+    "total_examples": 747,
+    "successful_predictions": 747,
+    "failed_predictions": 0,
+    "failure_rate": 0.0,
+    "exact_match_rate": 0.4243641231593039,
+    "mean_token_f1": 0.9303116053597483,
+    "mean_gleu": 0.6192908782653068,
+    "gleu_available": true,
+    "gleu_scored_examples": 747,
+    "mean_retrieved_examples": 5.0
+  }
+}

@@ -1,0 +1,9 @@
+chromadb
+datasets
+numpy
+python-dotenv
+requests
+sentence-transformers
+streamlit
+zstandard
+nltk

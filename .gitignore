@@ -1,0 +1,21 @@
+# Environment / secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Generated pipeline artifacts (created by running the pipeline, not committed)
+data/raw/*.json
+data/processed/*.json
+chroma_db/*
+!chroma_db/.gitkeep
+
+# OS / editor noise
+.DS_Store
+.vscode/
+.idea/
