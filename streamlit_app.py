@@ -115,6 +115,9 @@ EXAMPLE_SENTENCE_POOL = [
 # correctly regardless of where `streamlit run` is invoked from, both
 # locally and on Streamlit Cloud.
 BACKGROUND_IMAGE_PATH = "background_image.png"
+# Official BCreative Academy logo artwork (background already made
+# transparent) - rendered as-is in the sidebar, never redrawn/recreated.
+LOGO_IMAGE_PATH = "bcreative_logo.png"
 
 BRAND_NAME = "BCreative Academy"
 BRAND_SUBTITLE = "RAG-POWERED GRAMMAR ASSISTANT"
@@ -488,44 +491,27 @@ def inject_custom_css() -> None:
         /* ---------- Sidebar brand ---------- */
         .lex-sidebar-brand {{
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             padding: 6px 4px 18px 4px;
             border-bottom: 1px solid var(--panel-border);
             margin-bottom: 14px;
         }}
-        .lex-brand-mark {{
-            flex: 0 0 auto;
-            width: 34px;
-            height: 34px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 3px;
-        }}
-        .lex-brand-mark span {{
-            background: #FFFFFF;
-            border-radius: 2px;
-        }}
-        .lex-brand-mark span:nth-child(2) {{ background: transparent; }}
-        .lex-brand-mark span:nth-child(5) {{ background: var(--gold); }}
-        .lex-sidebar-brand .brand-text .name {{
-            font-size: 1.05rem;
-            line-height: 1.2;
-            letter-spacing: 1px;
-            color: #FFFFFF;
-            font-weight: 800;
-            text-transform: uppercase;
-        }}
-        .lex-sidebar-brand .brand-text .name .ai {{
-            color: #FFFFFF;
+        .lex-sidebar-brand .brand-logo-img {{
+            display: block;
+            width: 100%;
+            max-width: 190px;
+            height: auto;
+            margin: 0 auto;
         }}
         .lex-sidebar-brand .brand-text .sub {{
             font-size: 0.6rem;
             letter-spacing: 1px;
             color: var(--muted-ivory);
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 2px;
+            text-align: center;
         }}
 
         .lex-nav-item {{
@@ -1279,9 +1265,8 @@ def inject_custom_css() -> None:
                 font-size: 0.95rem !important;
                 padding: 10px 14px !important;
             }}
-            .lex-sidebar-brand .brand-text .name {{
-                font-size: 1.02rem;
-                letter-spacing: 1.5px;
+            .lex-sidebar-brand .brand-logo-img {{
+                max-width: 160px;
             }}
             .lex-result-box .content {{
                 font-size: 0.95rem;
@@ -1319,15 +1304,19 @@ def inject_custom_css() -> None:
 def render_sidebar() -> None:
     """Elegant premium sidebar: brand identity, visual navigation, quote."""
     with st.sidebar:
+        _logo_data_uri = _load_background_image_data_uri(LOGO_IMAGE_PATH)
+        _logo_img_html = (
+            f'<img class="brand-logo-img" src="{_logo_data_uri}" alt="{BRAND_NAME}">'
+            if _logo_data_uri
+            # Fallback so the sidebar still renders sensibly if the logo
+            # asset file is ever missing - never a recreated/redrawn logo.
+            else f'<div class="brand-text"><div class="name">{BRAND_NAME}</div></div>'
+        )
         st.markdown(
             f"""
             <div class="lex-sidebar-brand">
-                <div class="lex-brand-mark">
-                    <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                </div>
+                {_logo_img_html}
                 <div class="brand-text">
-                    <div class="name">BCREATIVE<br>ACADEMY</div>
                     <div class="sub">{BRAND_SUBTITLE}</div>
                 </div>
             </div>
